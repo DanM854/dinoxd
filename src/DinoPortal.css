@@ -1,0 +1,78 @@
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.header {
+  margin-bottom: 30px;
+}
+
+.section {
+  border: 1px solid #ccc;
+  padding: 15px;
+  margin-bottom: 25px;
+}
+
+.example-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 15px;
+}
+
+.example-card {
+  border: 1px solid #ddd;
+  padding: 10px;
+}
+
+.example-card img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+}
+
+.placeholder-img {
+  width: 100%;
+  height: 150px;
+  background: #eee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  color: #555;
+}
+
+.controls-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.controls-grid label {
+  display: block;
+  margin-top: 10px;
+}
+
+.controls-grid button {
+  margin-top: 15px;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.result-card {
+  border: 1px solid #ddd;
+  padding: 10px;
+}
+
+.result-card img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  margin-top: 10px;
+}
+
+.error {
+  margin-top: 10px;
+  color: red;
+}
