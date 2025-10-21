@@ -76,3 +76,17 @@
   margin-top: 10px;
   color: red;
 }
+
+.two-column {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem; /* espacio entre columnas */
+  align-items: start;
+}
+
+.two-column div {
+  background-color: #f8f8f8; /* opcional, solo para ver mejor la estructura */
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
