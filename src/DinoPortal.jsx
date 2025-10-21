@@ -1,9 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState,  } from "react";
 import "./DinoPortal.css";
 
 export default function DinoPortal() {
-  const [examples, setExamples] = useState([]);
-  const [loadingExamples, setLoadingExamples] = useState(false);
   const [generating, setGenerating] = useState(false);
   const [generatedName, setGeneratedName] = useState(null);
   const [generatedDescription, setGeneratedDescription] = useState(null);
@@ -20,7 +18,7 @@ export default function DinoPortal() {
   const DESC_API_URL = process.env.REACT_APP_DESC_API_URL || "http://localhost:11434";
   const IMG_API_URL = process.env.REACT_APP_IMG_API_URL || "http://localhost:8001";
 
-  // Cargar ejemplos al iniciar
+ 
   
 
   // Generar nombre + descripción + imagen
@@ -44,7 +42,7 @@ export default function DinoPortal() {
       setGeneratedName(name);
 
       // 🔹 2. Generar descripción desde el endpoint de Ollama
-      const prompt = `Eres un paleontólogo experto en nuevas especies que descubriste. Tu objetivo es darle una descripción al nombre del dinosaurio que se te enviará. Debes respetar o añadir los sufijos como -saurus, -raptor, -odon, -long o -venator, y prefijos de origen griego o latino que describen forma, tamaño o lugar. El dinosaurio al que describirás es el siguiente: ${name}. "NO ME DES MAS TEXTOS", sé conciso pero detallado.`;
+      const prompt = `Eres un paleontólogo experto en nuevas especies que descubriste. Tu objetivo es escribir una descripción breve y científica del dinosaurio cuyo nombre te proporcionaré. Reglas estrictas: 1. Respeta o añade los sufijos -saurus, -raptor, -odon, -long o -venator según corresponda. 2. Usa prefijos de origen griego o latino que describan forma, tamaño o lugar. 3. No incluyas ningún formato de markdown, comillas, paréntesis, guiones, asteriscos o caracteres especiales. 4. Entrega solo texto plano. No agregues saludos ni explicaciones. 5. No incluyas traducciones ni explicaciones etimológicas entre paréntesis. 6. La salida debe ser solo texto plano, sin formato, sin negritas ni cursivas. 7. Sé conciso pero detallado, como si fuera una ficha científica breve. Dinosaurio a describir: ${name}`;
 
       const descResp = await fetch(`${DESC_API_URL}/api/generate`, {
         method: "POST",
@@ -58,7 +56,9 @@ export default function DinoPortal() {
       if (!descResp.ok) throw new Error(`Error generando descripción: ${descResp.status}`);
       const descData = await descResp.json();
       const description =
-        descData.response || descData.text || descData.description || "Sin descripción generada";
+        descData.response?.trim() ||
+  descData.text?.trim() ||
+  descData.description?.trim() || "Sin descripción generada";
       setGeneratedDescription(description);
 
       // 🔹 3. Generar imagen con tu API de difusión (FastAPI)
@@ -134,10 +134,15 @@ export default function DinoPortal() {
           <p><strong>Imagen:</strong></p>
           {generatedImageUrl ? (
             <img
-              src={generatedImageUrl}
-              alt={generatedName}
-              style={{ width: "300px", borderRadius: "8px", marginTop: "10px" }}
-            />
+  src={generatedImageUrl}
+  alt={generatedName}
+  style={{
+    maxWidth: "100%",
+    width: "512px",
+    borderRadius: "8px",
+    marginTop: "10px"
+  }}
+/>
           ) : (
             <div className="placeholder-img">Imagen no disponible</div>
           )}
