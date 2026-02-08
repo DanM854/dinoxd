@@ -1,0 +1,30 @@
+# Servidor web y CORS
+fastapi
+uvicorn
+python-multipart
+pydantic
+
+# CORS Middleware
+starlette
+
+# Modelos de difusión (Stable Diffusion, Amused, etc.)
+torch
+diffusers
+transformers
+safetensors
+accelerate
+huggingface-hub
+
+# Imagen
+Pillow
+
+# Progreso / utilidad
+tqdm
+
+# Chat e integración con Ollama
+langchain
+langchain-core
+langchain-ollama
+
+# Tipos y utilidades
+typing-extensions
