@@ -1,70 +1,24 @@
-# Getting Started with Create React App
+# 🦖Dino portal
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Un proyecto para la materia Procesamiento de Lenguaje Natural pensado para entender modelos de lenguaje a nivel de caracteres con RNN (Redes Neuronales recurrentes) con tematica de dinosaurios.
 
-## Available Scripts
+## Contexto del trabajo
 
-In the project directory, you can run:
+¡Bienvenido a la Isla de los Dinosaurios! Los principales investigadores en ingeniería genética están creando nuevas especies de dinosaurios y tenemos la misión de asignarles un nombre. En este momento contamos con una lista que contiene todos los nombres de dinosaurios conocidos. A partir de ese listado, tenemos la misión de entrenar un modelo de lenguaje a nivel de caracteres, usando RNN, que aprenda los patrones de los nombres y genere nuevas combinaciones para asignar un nombre a las nuevas especies. Se espera que los nombres generados sean originales, plausibles y variados.
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+* Generación de caracteres
+* Generación de una descripcion para los nombres generados usando Ollama
+* Text-to-Image usando modelos de difusión
+* Integración en una aplicacion web
+* Chat con los dinosaurios
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+En el archivo Generador de caracteres - Dino.pdf se encuentra toda la información
 
-### `npm test`
+### Archivos
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+* En `src` se encuentran todos los componentes de React
+* En `api` se encuentran las api's de las funciones de la aplicacion web
+  * `names_api.py` Generación de nombres basandose en los datos de https://raw.githubusercontent.com/jpospinalo/MachineLearning/main/nlp/dinos.csv
+  * `dino_api.py` Generación de imagenes basandose en el nombre y descripción generados
+  * `chat_api.py` Chat para comunicarse con alguno de los dinosaurios
