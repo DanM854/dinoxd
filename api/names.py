@@ -1,3 +1,9 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+dinos.py — Entrena un modelo LSTM generador de nombres de dinosaurios
+Guarda el modelo, diccionarios y genera ejemplos en consola.
+"""
 
 import os
 import random
@@ -5,9 +11,11 @@ import numpy as np
 import pandas as pd
 import tensorflow as tf
 from tensorflow.keras import layers
+import json
 import re
+
 # -------------------------
-# Configuración fija
+# Configuración
 # -------------------------
 SEED = 42
 T = 24
@@ -20,15 +28,22 @@ TOP_N = 10
 DEVICE = "/cpu:0"
 RAW_URL = "https://raw.githubusercontent.com/jpospinalo/MachineLearning/main/nlp/dinos.csv"
 LOCAL_PATH = "./data/dinos.csv"
+MODEL_DIR = "./model"
+
 SOS = "<sos>"
 EOS = "<eos>"
 PAD = "<pad>"
+
+os.makedirs(MODEL_DIR, exist_ok=True)
+os.makedirs("./data", exist_ok=True)
 
 random.seed(SEED)
 np.random.seed(SEED)
 tf.random.set_seed(SEED)
 
-
+# -------------------------
+# Carga y preprocesamiento
+# -------------------------
 def load_names(local_path=LOCAL_PATH, raw_url=RAW_URL):
     if os.path.exists(local_path):
         df = pd.read_csv(local_path, header=None)
@@ -72,7 +87,9 @@ def make_xy(seqs, char2idx, T):
             Y[i, t] = char2idx[s[t+1]]
     return X, Y
 
-
+# -------------------------
+# Modelo
+# -------------------------
 def build_model(vocab_size, embed_dim=EMBED_DIM, rnn_units=RNN_UNITS):
     inputs = layers.Input(shape=(None,), dtype="int32")
     x = layers.Embedding(vocab_size, embed_dim, mask_zero=True)(inputs)
@@ -131,7 +148,9 @@ def generate_one(model, char2idx, idx2char, T, temperature, top_k, top_p):
     name = "".join([c for c in chars if c not in {SOS, EOS, PAD}])
     return name.capitalize()
 
-
+# -------------------------
+# Scoring
+# -------------------------
 def score_name(name, originals):
     if not name:
         return -1e6
@@ -140,25 +159,19 @@ def score_name(name, originals):
         return -1000
     if any(not c.isalpha() for c in n):
         return -500
-
-    # --- Penalización base por longitud y proporción de vocales ---
     length_score = -abs(len(n) - 8)
     vowels = set("aeiou")
     vf = sum(1 for c in n if c in vowels) / max(1, len(n))
     score = 10 + length_score + 5 * vf
-
-    # --- Penalización por vocal repetida (aaa, eee, etc.) ---
     if re.search(r"(a{2,}|e{2,}|i{2,}|o{2,}|u{2,})", n):
-        score -= 500  # penalización fuerte
-        print(f"penalizacion: {score}")
-
-    # --- Penalización por secuencias de 3 o más vocales consecutivas (aei, aio, oeu, etc.) ---
+        score -= 500
     if re.search(r"[aeiou]{3,}", n):
-        score -= 500  # penalización adicional
-
+        score -= 500
     return score
 
-
+# -------------------------
+# Entrenamiento + generación
+# -------------------------
 def train_and_generate(names):
     seqs, vocab = normalize_and_tokenize(names, T)
     char2idx, idx2char = make_mappings(vocab)
@@ -176,7 +189,7 @@ def train_and_generate(names):
     ps = [0.0, 0.8, 0.95]
 
     originals = set(n.lower() for n in names)
-    gens = []  # Ahora guarda tuplas (nombre, temp, k, p)
+    gens = []
     for t in temps:
         for k in ks:
             for p in ps:
@@ -195,10 +208,24 @@ def train_and_generate(names):
             scored.append((sc, g, t, k, p))
 
     scored.sort(key=lambda x: -x[0])
-    # Retorno: mejores nombres + modelo + mappings
     return scored[:TOP_N], model, char2idx, idx2char
 
 
+# -------------------------
+# Guardado de modelo y diccionarios
+# -------------------------
+def save_model_and_dicts(model, char2idx, idx2char):
+    model.save_weights(os.path.join(MODEL_DIR, "dino_model.h5"))
+    with open(os.path.join(MODEL_DIR, "char2idx.json"), "w") as f:
+        json.dump(char2idx, f)
+    with open(os.path.join(MODEL_DIR, "idx2char.json"), "w") as f:
+        json.dump(idx2char, f)
+    print("✅ Modelo y diccionarios guardados en ./model/")
+
+
+# -------------------------
+# MAIN
+# -------------------------
 def main():
     names = load_names()
     print(f"Cargados {len(names)} nombres.")
@@ -208,9 +235,7 @@ def main():
     for i, (sc, n, t, k, p) in enumerate(top_scored, 1):
         print(f"{i}. {n} --> temp={t}, top-k={k}, top-p={p}")
 
-    # Ahora 'model', 'char2idx', 'idx2char' quedan disponibles en memoria
-    return model, char2idx, idx2char
-
+    save_model_and_dicts(model, char2idx, idx2char)
 
 
 if __name__ == "__main__":
