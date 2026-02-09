@@ -22,3 +22,9 @@ En el archivo Generador de caracteres - Dino.pdf se encuentra toda la informaci�
   * `names_api.py` Generación de nombres basandose en los datos de https://raw.githubusercontent.com/jpospinalo/MachineLearning/main/nlp/dinos.csv
   * `dino_api.py` Generación de imagenes basandose en el nombre y descripción generados
   * `chat_api.py` Chat para comunicarse con alguno de los dinosaurios
+
+Realizado por:
+  * Daniel Mora
+  * Juan Londoño
+  * Sebastian Sabogal
+  * Tomas de Andreis
