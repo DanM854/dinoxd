@@ -41,7 +41,7 @@ use_cuda = torch.cuda.is_available()
 dtype = torch.float16 if use_cuda else torch.float32
 device = "cuda" if use_cuda else "cpu"
 
-print(f"Cargando modelo '{model_id}' en {device} con dtype={dtype}... dasd")
+print(f"Cargando modelo '{model_id}' en {device} con dtype={dtype}...")
 
 pipe = DiffusionPipeline.from_pretrained(
     model_id,

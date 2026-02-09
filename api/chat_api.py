@@ -34,7 +34,7 @@ def ask_dino(input_data: ChatInput):
     Devuelve: respuesta generada por el modelo
     """
 
-    # 🔹 Configurar modelo Ollama
+    #Configurar modelo Ollama
     model = ChatOllama(
         base_url='https://unfalsifiable-unpolemically-kenda.ngrok-free.dev',
         model='gemma3:4b',
@@ -44,7 +44,7 @@ def ask_dino(input_data: ChatInput):
         keep_alive='5m'
     )
 
-    # 🔹 Crear prompt personalizado con el dinosaurio generado
+    #Crear prompt personalizado con el dinosaurio generado
     system_prompt = (
         f"Eres un dinosaurio recién descubierto llamado {input_data.name}. "
         f"Tu descripción científica es la siguiente:\n\n"
@@ -58,7 +58,7 @@ def ask_dino(input_data: ChatInput):
         f"- Si el humano te pregunta sobre ti, responde con detalles basados en tu descripción.\n"
     )
 
-    # 🔹 Crear plantilla LangChain
+    #Crear plantilla LangChain
     chat_template = ChatPromptTemplate.from_messages([
         ("system", system_prompt),
         ("human", "{user_input}")
@@ -66,7 +66,7 @@ def ask_dino(input_data: ChatInput):
 
     chain = chat_template | model | StrOutputParser()
 
-    # 🔹 Generar respuesta (streaming)
+    #Generar respuesta (streaming)
     response = ""
     for chunk in chain.stream({"user_input": input_data.message}):
         response += chunk
