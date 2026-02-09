@@ -19,12 +19,17 @@ En el archivo Generador de caracteres - Dino.pdf se encuentra toda la informaci�
 
 * En `src` se encuentran todos los componentes de React
 * En `api` se encuentran las api's de las funciones de la aplicacion web
-  * `names_api.py` Generación de nombres basandose en los datos de https://raw.githubusercontent.com/jpospinalo/MachineLearning/main/nlp/dinos.csv
+  * `name.py` Generación de nombres basandose en los datos de *dinos.csv*, es necesario correrlo para poder cargar el modelo (archivo .h5) y que se puedan generar los nombres con `api.py`
+  * `api.py` Crea el endpoint */generate* para poder crear nombres con el modelo precargado
   * `dino_api.py` Generación de imagenes basandose en el nombre y descripción generados
   * `chat_api.py` Chat para comunicarse con alguno de los dinosaurios
+  * 
 
 Realizado por:
   * Daniel Mora
   * Juan Londoño
   * Sebastian Sabogal
   * Tomas de Andreis
+
+
+csv: https://raw.githubusercontent.com/jpospinalo/MachineLearning/main/nlp/dinos.csv 
