@@ -15,6 +15,11 @@ Un proyecto para la materia Procesamiento de Lenguaje Natural pensado para enten
 
 En el archivo Generador de caracteres - Dino.pdf se encuentra toda la información
 
+<img width="1878" height="896" alt="image" src="https://github.com/user-attachments/assets/39d90e47-ca32-455a-ab86-37ee534a082e" />
+
+<img width="855" height="706" alt="image" src="https://github.com/user-attachments/assets/2efa0d43-4a55-4555-ad2b-a9bde8693e09" />
+
+
 ### Archivos
 
 * En `src` se encuentran todos los componentes de React
@@ -25,6 +30,8 @@ En el archivo Generador de caracteres - Dino.pdf se encuentra toda la informaci�
   * `chat_api.py` Chat para comunicarse con alguno de los dinosaurios
   * 
 
+
+
 Realizado por:
   * Daniel Mora
   * Juan Londoño
@@ -33,3 +40,4 @@ Realizado por:
 
 
 csv: https://raw.githubusercontent.com/jpospinalo/MachineLearning/main/nlp/dinos.csv 
+
